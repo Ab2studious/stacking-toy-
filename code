@@ -1,0 +1,214 @@
+# Defining the actual colors for the rings
+
+RED = "\033[91m"
+WHITE = "\033[97m"
+YELLOW = "\033[93m"
+GREEN = "\033[92m"
+BLUE = "\033[94m"
+
+RESET = "\033[0m"
+
+
+# Variables for the rings
+red = f""" {RED}
+         ________________________
+        |          Red           |  
+         ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾ 
+         {RESET}"""
+
+orange = f""" {WHITE}
+          ______________________
+         |        White         |  
+          ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+         {RESET}"""
+
+yellow = f""" {YELLOW}
+           ___________________
+          |       Yellow      |  
+           ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+         {RESET}"""
+
+green = f""" {GREEN}
+            _________________
+           |      Green      |  
+            ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+         {RESET}"""
+
+blue = f""" {BLUE}
+             ______________
+            |     Blue     |  
+             ‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+         {RESET}"""
+
+#Function to fill the stack up
+def fillStack(stack):
+
+    stack.append(red)
+    stack.append(orange)
+    stack.append(yellow)
+    stack.append(green)
+    stack.append(blue)
+
+    return stack
+    
+
+#Function to print the stack
+def printStack(stack):
+    
+    print()
+    
+    count = len(stack) - 1
+    
+    for i in range(len(stack)):
+        
+        print(stack[count-i])
+    
+
+# Function to take the top ring off of the stack
+def removeTop(stack, hand):
+    
+    print()
+    
+    topRing = stack[-1]
+    
+    if topRing == red:
+        
+        print("Removing the red ring")
+        
+    elif topRing == orange:
+        
+        print("Removing the orange ring")
+        
+    elif topRing == yellow:
+        
+        print("Removing the yellow ring")
+        
+    elif topRing == green:
+        
+        print("Removing the green ring")
+        
+    elif topRing == blue:
+        
+        print("Removing the blue ring")
+    
+    hand.append(topRing)
+    stack.pop()
+    
+    printStack(stack)
+
+    
+# Function to place a ring from your hand onto the stack
+def placeRing(stack, hand):
+    
+    # Prints what rings you have in your hand
+
+    print("\nThe rings in your hand are:")
+    print()
+
+    for i in range(len(hand)):
+        
+        print(hand[i], end=" ")
+    
+    print("\n")
+    
+    # Asking the user to select a ring to place
+    while True:
+        
+        pChoice = input("\nSelect a number from 1-5 to place the corresponding ring from your hand onto the stack.")
+        
+        if pChoice.isdigit() == True:
+            
+            if int(pChoice) > len(hand) or int(pChoice) < 1:
+                
+                print("\nPlease provide a valid input.")
+
+            else:
+
+                break
+
+        else:
+    
+            print("\nPlease provide a valid input.")
+            
+            
+    pChoice = int(pChoice) - 1
+    
+        
+    if hand[pChoice] == red:
+            
+        stack.append(red)
+            
+    elif hand[pChoice] == orange:
+            
+        stack.append(orange)
+            
+    elif hand[pChoice] == yellow:
+            
+        stack.append(yellow)
+            
+    elif hand[pChoice] == green:
+            
+        stack.append(green)
+            
+    elif hand[pChoice] == blue:
+
+        stack.append(blue)
+        
+    # Removing the ring from the hand once it is placed down
+    hand.pop(pChoice)
+        
+    printStack(stack)
+    
+    
+            
+# Function for determining if the user wants to place or remove a ring          
+def choice():
+    
+    
+    # Input validation. It doesn't let you remove a ring if there are none on the stack
+    while True:
+        
+        choice = input("\nWould you like to remove a ring or place one? Enter 'R' for remove or 'P' for place.")
+        
+        if choice.upper() == 'R':
+            
+            if len(stack) == 0:
+                
+                print("\nThe stack is currently empty. You have to place a ring.")
+                
+            else:
+                
+                removeTop(stack,hand)
+
+
+    # Input validation. It doesn't let you place a ring if you haven't picked one up
+        elif choice.upper() == 'P':
+            
+            if len(hand) == 0:
+        
+                print("\nYour hand is empty, remove a ring from the stack to put it in your hand.")
+            
+            else:
+                
+                placeRing(stack, hand)
+
+        else:
+            
+            choice = input("\nPlease provide a valid input")
+
+
+# Empty stack and hand lists
+
+stack = []
+
+hand = []
+
+# Calling functions in order
+
+fillStack(stack)
+
+while True:
+    
+    printStack(stack)
+    
+    choice()
